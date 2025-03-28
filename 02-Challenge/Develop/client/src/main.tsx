@@ -1,20 +1,36 @@
-import ReactDOM from 'react-dom/client'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
 
-import App from './App.js'
+import App from './App.tsx';
+import FilmSearch from './pages/FilmSearch.tsx';
+import WatchList from './pages/WatchList.tsx';
+import SeenIt from './pages/SeenIt.tsx';
+import ErrorPage from './pages/ErrorPage.tsx';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <>
-    <App />
-    <div>
-      <h1>Welcome to the React App</h1>
-      <p>This is a simple React application.</p>
-      <button className="btn btn-primary">Click Me!</button>
-      <p>Enjoy coding!</p>
-      <p>Happy coding!</p>
-      <p>Have a great day!</p>
-      <p>Keep learning!</p>
-      <p>Stay positive!</p>
-    </div>
-  </>
-)
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <FilmSearch />,
+      },
+      {
+        path: '/WatchList',
+        element: <WatchList />,
+      },
+      {
+        path: '/SeenIt',
+        element: <SeenIt />,
+      },
+    ],
+  },
+]);
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+}
